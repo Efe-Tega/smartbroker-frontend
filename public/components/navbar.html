@@ -1,0 +1,133 @@
+<!-- Navigation -->
+<nav
+  class="bg-white dark:bg-dark-bg-secondary shadow-lg fixed top-0 left-0 right-0 z-40 transition-colors duration-200"
+>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Left side with menu and logo -->
+      <div class="flex items-center flex-1">
+        <button
+          id="menuBtn"
+          class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 inline-flex items-center justify-center p-2 rounded-md lg:hidden"
+        >
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        <a href="/" class="flex items-center ml-2 lg:ml-0">
+          <span class="text-2xl font-bold text-blue-600">CryptoBroker</span>
+        </a>
+      </div>
+
+      <!-- Mobile icons (always visible) -->
+      <div class="flex items-center space-x-4 lg:hidden">
+        <!-- Dark Mode Toggle -->
+        <button
+          id="darkModeToggleMobile"
+          class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400 p-2"
+        >
+          <i class="fas fa-moon dark:hidden text-xl"></i>
+          <i class="fas fa-sun hidden dark:inline text-xl"></i>
+        </button>
+        <!-- Mobile Profile -->
+        <button
+          class="flex items-center text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+        >
+          <img
+            src="https://ui-avatars.com/api/?name=John+Doe"
+            alt="Profile"
+            class="h-8 w-8 rounded-full"
+          />
+        </button>
+      </div>
+
+      <!-- Desktop icons -->
+      <div class="hidden lg:flex items-center space-x-8">
+        <!-- Dark Mode Toggle -->
+        <button
+          id="darkModeToggle"
+          class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+        >
+          <i class="fas fa-moon dark:hidden"></i>
+          <i class="fas fa-sun hidden dark:inline"></i>
+        </button>
+        <a
+          href="#"
+          class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+        >
+          <i class="fas fa-bell"></i>
+          <span class="ml-1">Notifications</span>
+        </a>
+        <div class="relative">
+          <button
+            class="flex items-center text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+          >
+            <img
+              src="https://ui-avatars.com/api/?name=John+Doe"
+              alt="Profile"
+              class="h-8 w-8 rounded-full"
+            />
+            <span class="ml-2">John Doe</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<div
+  id="sidebar"
+  class="w-64 bg-white dark:bg-dark-bg-secondary h-screen shadow-lg fixed left-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-30"
+>
+  <div class="p-4">
+    <nav class="space-y-2">
+      <a
+        href="/dashboard.html"
+        class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+      >
+        <i class="fas fa-chart-line w-6"></i>
+        <span>Dashboard</span>
+      </a>
+      <a
+        href="/deposits.html"
+        class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+      >
+        <i class="fas fa-wallet w-6"></i>
+        <span>Deposits</span>
+      </a>
+      <a
+        href="/withdraw.html"
+        class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+      >
+        <i class="fas fa-money-bill-wave w-6"></i>
+        <span>Withdraw</span>
+      </a>
+      <a
+        href="/investments.html"
+        class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+      >
+        <i class="fas fa-coins w-6"></i>
+        <span>Investments</span>
+      </a>
+      <a
+        href="/history.html"
+        class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+      >
+        <i class="fas fa-history w-6"></i>
+        <span>History</span>
+      </a>
+      <a
+        href="/settings.html"
+        class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+      >
+        <i class="fas fa-cog w-6"></i>
+        <span>Settings</span>
+      </a>
+    </nav>
+  </div>
+</div>
+
+<!-- Overlay -->
+<div
+  id="overlay"
+  class="fixed inset-0 bg-black opacity-50 z-20 hidden lg:hidden"
+></div>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Investments - CryptoBroker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                "bg-primary": "#1a1b1e",
+                "bg-secondary": "#2c2e33",
+                "text-primary": "#e4e6ea",
+                "text-secondary": "#9ca3af",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../src/styles/main.css" />
+  </head>
+  <body
+    class="bg-gray-50 dark:bg-dark-bg-primary dark:text-dark-text-primary transition-colors duration-200"
+  >
+    <!-- Navigation  -->
+    <nav
+      class="bg-white dark:bg-dark-bg-secondary shadow-lg fixed top-0 left-0 right-0 z-40 transition-colors duration-200"
+    >
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <button
+              id="menuBtn"
+              class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400 inline-flex items-center justify-center p-2 rounded-md lg:hidden"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+            <a href="/" class="flex items-center ml-2 lg:ml-0">
+              <span class="text-2xl font-bold text-blue-600">CryptoBroker</span>
+            </a>
+          </div>
+
+          <!-- Add dark mode toggle for mobile -->
+          <div class="flex items-center space-x-4 lg:hidden">
+            <button
+              id="darkModeToggleMobile"
+              class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400 p-2"
+            >
+              <i class="fas fa-moon dark:hidden text-xl"></i>
+              <i class="fas fa-sun hidden dark:inline text-xl"></i>
+            </button>
+          </div>
+
+          <div class="hidden lg:flex items-center space-x-8">
+            <!-- Add dark mode toggle for desktop -->
+            <button
+              id="darkModeToggle"
+              class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+            >
+              <i class="fas fa-moon dark:hidden"></i>
+              <i class="fas fa-sun hidden dark:inline"></i>
+            </button>
+            <a
+              href="#"
+              class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+            >
+              <i class="fas fa-bell"></i>
+              <span class="ml-1">Notifications</span>
+            </a>
+            <div class="relative">
+              <button
+                class="flex items-center text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+              >
+                <img
+                  src="https://ui-avatars.com/api/?name=John+Doe"
+                  alt="Profile"
+                  class="h-8 w-8 rounded-full"
+                />
+                <span class="ml-2">John Doe</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex pt-16">
+      <!-- Sidebar  -->
+      <div
+        id="sidebar"
+        class="w-64 bg-white dark:bg-dark-bg-secondary h-screen shadow-lg fixed left-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-30"
+      >
+        <div class="p-4">
+          <nav class="space-y-2">
+            <a
+              href="/dashboard.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-chart-line w-6"></i>
+              <span>Dashboard</span>
+            </a>
+            <a
+              href="/deposits.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-wallet w-6"></i>
+              <span>Deposits</span>
+            </a>
+            <a
+              href="/investments.html"
+              class="flex items-center p-3 text-blue-600 bg-blue-50 dark:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-coins w-6"></i>
+              <span>Investments</span>
+            </a>
+            <a
+              href="/history.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-history w-6"></i>
+              <span>History</span>
+            </a>
+            <a
+              href="/settings.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-cog w-6"></i>
+              <span>Settings</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Overlay -->
+      <div
+        id="overlay"
+        class="fixed inset-0 bg-black opacity-50 z-20 hidden lg:hidden"
+      ></div>
+
+      <!-- Main Content -->
+      <div class="w-full lg:ml-64 p-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+          <h1
+            class="text-2xl font-bold text-gray-800 dark:text-dark-text-primary"
+          >
+            Investment Plans
+          </h1>
+          <p class="text-gray-600 dark:text-dark-text-secondary mt-1">
+            Choose from our range of investment plans
+          </p>
+        </div>
+
+        <!-- Investment Plans -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <!-- Standard Plan -->
+          <div class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow p-6">
+            <div class="text-center">
+              <h2
+                class="text-xl font-bold text-gray-900 dark:text-dark-text-primary"
+              >
+                Standard Plan
+              </h2>
+              <div class="mt-4">
+                <span class="text-4xl font-bold text-blue-600">2%</span>
+                <span class="text-gray-500 dark:text-dark-text-secondary"
+                  >/day</span
+                >
+              </div>
+              <p class="mt-2 text-gray-500 dark:text-dark-text-secondary">
+                Minimum Investment
+              </p>
+              <p
+                class="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary"
+              >
+                $1,000
+              </p>
+            </div>
+            <div class="mt-6 space-y-4">
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Daily ROI: 2%</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Duration: 90 days</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Total Return: 180%</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >24/7 Support</span
+                >
+              </div>
+            </div>
+            <button
+              class="w-full mt-8 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Invest Now
+            </button>
+          </div>
+
+          <!-- Premium Plan -->
+          <div
+            class="bg-blue-50 dark:bg-blue-900/20 rounded-lg shadow p-6 border-2 border-blue-600 dark:border-blue-500 relative"
+          >
+            <div class="absolute -top-3 right-4">
+              <span
+                class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm"
+                >Popular</span
+              >
+            </div>
+            <div class="text-center">
+              <h2
+                class="text-xl font-bold text-gray-900 dark:text-dark-text-primary"
+              >
+                Premium Plan
+              </h2>
+              <div class="mt-4">
+                <span class="text-4xl font-bold text-blue-600">3%</span>
+                <span class="text-gray-500 dark:text-dark-text-secondary"
+                  >/day</span
+                >
+              </div>
+              <p class="mt-2 text-gray-500 dark:text-dark-text-secondary">
+                Minimum Investment
+              </p>
+              <p
+                class="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary"
+              >
+                $5,000
+              </p>
+            </div>
+            <div class="mt-6 space-y-4">
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Daily ROI: 3%</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Duration: 90 days</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Total Return: 270%</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Priority Support</span
+                >
+              </div>
+            </div>
+            <button
+              class="w-full mt-8 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Invest Now
+            </button>
+          </div>
+
+          <!-- Platinum Plan -->
+          <div class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow p-6">
+            <div class="text-center">
+              <h2
+                class="text-xl font-bold text-gray-900 dark:text-dark-text-primary"
+              >
+                Platinum Plan
+              </h2>
+              <div class="mt-4">
+                <span class="text-4xl font-bold text-blue-600">4%</span>
+                <span class="text-gray-500 dark:text-dark-text-secondary"
+                  >/day</span
+                >
+              </div>
+              <p class="mt-2 text-gray-500 dark:text-dark-text-secondary">
+                Minimum Investment
+              </p>
+              <p
+                class="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary"
+              >
+                $10,000
+              </p>
+            </div>
+            <div class="mt-6 space-y-4">
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Daily ROI: 4%</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Duration: 90 days</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >Total Return: 360%</span
+                >
+              </div>
+              <div class="flex items-center">
+                <i
+                  class="fas fa-check text-green-500 dark:text-green-400 mr-3"
+                ></i>
+                <span class="text-gray-600 dark:text-dark-text-secondary"
+                  >VIP Support</span
+                >
+              </div>
+            </div>
+            <button
+              class="w-full mt-8 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Invest Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Investment Calculator -->
+        <div
+          class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow p-6 mb-8"
+        >
+          <h2
+            class="text-lg font-semibold text-gray-900 dark:text-dark-text-primary mb-4"
+          >
+            Investment Calculator
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2"
+                >Select Plan</label
+              >
+              <select
+                id="planSelect"
+                class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-primary text-gray-900 dark:text-dark-text-primary rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="standard">Standard Plan (2%)</option>
+                <option value="premium">Premium Plan (3%)</option>
+                <option value="platinum">Platinum Plan (4%)</option>
+              </select>
+            </div>
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2"
+                >Investment Amount ($)</label
+              >
+              <input
+                type="number"
+                id="investmentAmount"
+                class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg-primary text-gray-900 dark:text-dark-text-primary rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter amount"
+              />
+            </div>
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2"
+                >Duration (Days)</label
+              >
+              <input
+                type="number"
+                id="duration"
+                value="90"
+                readonly
+                class="w-full border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-dark-bg-primary text-gray-900 dark:text-dark-text-primary rounded-lg px-3 py-2"
+              />
+            </div>
+          </div>
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-50 dark:bg-dark-bg-primary p-4 rounded-lg">
+              <h3
+                class="text-sm font-medium text-gray-500 dark:text-dark-text-secondary"
+              >
+                Daily Profit
+              </h3>
+              <p
+                class="text-2xl font-bold text-blue-600 dark:text-blue-400"
+                id="dailyProfit"
+              >
+                $0.00
+              </p>
+            </div>
+            <div class="bg-gray-50 dark:bg-dark-bg-primary p-4 rounded-lg">
+              <h3
+                class="text-sm font-medium text-gray-500 dark:text-dark-text-secondary"
+              >
+                Total Profit
+              </h3>
+              <p
+                class="text-2xl font-bold text-green-600 dark:text-green-400"
+                id="totalProfit"
+              >
+                $0.00
+              </p>
+            </div>
+            <div class="bg-gray-50 dark:bg-dark-bg-primary p-4 rounded-lg">
+              <h3
+                class="text-sm font-medium text-gray-500 dark:text-dark-text-secondary"
+              >
+                Total Return
+              </h3>
+              <p
+                class="text-2xl font-bold text-gray-900 dark:text-dark-text-primary"
+                id="totalReturn"
+              >
+                $0.00
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Investments -->
+        <div class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow">
+          <div class="p-6">
+            <h2
+              class="text-lg font-semibold text-gray-900 dark:text-dark-text-primary mb-4"
+            >
+              Active Investments
+            </h2>
+            <div class="overflow-x-auto">
+              <table
+                class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+              >
+                <thead class="bg-gray-50 dark:bg-dark-bg-primary">
+                  <tr>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Plan
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Amount
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Daily ROI
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Start Date
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      End Date
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="bg-white dark:bg-dark-bg-secondary divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div
+                        class="text-sm font-medium text-gray-900 dark:text-dark-text-primary"
+                      >
+                        Premium Plan
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div
+                        class="text-sm text-gray-900 dark:text-dark-text-primary"
+                      >
+                        $5,000
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-green-600 dark:text-green-400">
+                        $150
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div
+                        class="text-sm text-gray-900 dark:text-dark-text-primary"
+                      >
+                        2024-02-01
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div
+                        class="text-sm text-gray-900 dark:text-dark-text-primary"
+                      >
+                        2024-05-01
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400"
+                        >Active</span
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Dark mode functionality
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      const darkModeToggleMobile = document.getElementById(
+        "darkModeToggleMobile"
+      );
+      const html = document.documentElement;
+
+      // Check for saved dark mode preference
+      if (
+        localStorage.getItem("darkMode") === "enabled" ||
+        (!localStorage.getItem("darkMode") &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        html.classList.add("dark");
+      }
+
+      // Toggle dark mode function
+      function toggleDarkMode() {
+        html.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          html.classList.contains("dark") ? "enabled" : "disabled"
+        );
+      }
+
+      // Add click handlers to both toggle buttons
+      darkModeToggle.addEventListener("click", toggleDarkMode);
+      darkModeToggleMobile.addEventListener("click", toggleDarkMode);
+
+      // Watch for system theme changes
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem("darkMode")) {
+            html.classList.toggle("dark", e.matches);
+          }
+        });
+
+      // Mobile menu functionality
+      const menuBtn = document.getElementById("menuBtn");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      function toggleSidebar() {
+        sidebar.classList.toggle("-translate-x-full");
+        overlay.classList.toggle("hidden");
+        document.body.classList.toggle("overflow-hidden");
+      }
+
+      menuBtn.addEventListener("click", toggleSidebar);
+      overlay.addEventListener("click", toggleSidebar);
+
+      // Investment Calculator
+      const planSelect = document.getElementById("planSelect");
+      const investmentAmount = document.getElementById("investmentAmount");
+      const dailyProfit = document.getElementById("dailyProfit");
+      const totalProfit = document.getElementById("totalProfit");
+      const totalReturn = document.getElementById("totalReturn");
+
+      function calculateReturns() {
+        const amount = parseFloat(investmentAmount.value) || 0;
+        let rate = 0;
+
+        switch (planSelect.value) {
+          case "standard":
+            rate = 0.02;
+            break;
+          case "premium":
+            rate = 0.03;
+            break;
+          case "platinum":
+            rate = 0.04;
+            break;
+        }
+
+        const daily = amount * rate;
+        const total = daily * 90;
+
+        dailyProfit.textContent = `$${daily.toFixed(2)}`;
+        totalProfit.textContent = `$${total.toFixed(2)}`;
+        totalReturn.textContent = `$${(amount + total).toFixed(2)}`;
+      }
+
+      planSelect.addEventListener("change", calculateReturns);
+      investmentAmount.addEventListener("input", calculateReturns);
+    </script>
+  </body>
+</html>

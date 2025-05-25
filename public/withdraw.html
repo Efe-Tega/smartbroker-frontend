@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Withdraw - CryptoBroker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                "bg-primary": "#1a1b1e",
+                "bg-secondary": "#2c2e33",
+                "text-primary": "#e4e6ea",
+                "text-secondary": "#9ca3af",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../src/styles/main.css" />
+  </head>
+  <body
+    class="bg-gray-50 dark:bg-dark-bg-primary dark:text-dark-text-primary transition-colors duration-200"
+  >
+    <!-- Navigation -->
+    <nav
+      class="bg-white dark:bg-dark-bg-secondary shadow-lg fixed top-0 left-0 right-0 z-40 transition-colors duration-200"
+    >
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+          <!-- Left side with menu and logo -->
+          <div class="flex items-center flex-1">
+            <button
+              id="menuBtn"
+              class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 inline-flex items-center justify-center p-2 rounded-md lg:hidden"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+            <a href="/" class="flex items-center ml-2 lg:ml-0">
+              <span class="text-2xl font-bold text-blue-600">CryptoBroker</span>
+            </a>
+          </div>
+
+          <!-- Mobile icons (always visible) -->
+          <div class="flex items-center space-x-4 lg:hidden">
+            <!-- Dark Mode Toggle -->
+            <button
+              id="darkModeToggleMobile"
+              class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400 p-2"
+            >
+              <i class="fas fa-moon dark:hidden text-xl"></i>
+              <i class="fas fa-sun hidden dark:inline text-xl"></i>
+            </button>
+            <!-- Mobile Profile -->
+            <button
+              class="flex items-center text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+            >
+              <img
+                src="https://ui-avatars.com/api/?name=John+Doe"
+                alt="Profile"
+                class="h-8 w-8 rounded-full"
+              />
+            </button>
+          </div>
+
+          <!-- Desktop icons -->
+          <div class="hidden lg:flex items-center space-x-8">
+            <!-- Dark Mode Toggle -->
+            <button
+              id="darkModeToggle"
+              class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+            >
+              <i class="fas fa-moon dark:hidden"></i>
+              <i class="fas fa-sun hidden dark:inline"></i>
+            </button>
+            <a
+              href="#"
+              class="text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+            >
+              <i class="fas fa-bell"></i>
+              <span class="ml-1">Notifications</span>
+            </a>
+            <div class="relative">
+              <button
+                class="flex items-center text-gray-600 dark:text-dark-text-primary hover:text-blue-600 dark:hover:text-blue-400"
+              >
+                <img
+                  src="https://ui-avatars.com/api/?name=John+Doe"
+                  alt="Profile"
+                  class="h-8 w-8 rounded-full"
+                />
+                <span class="ml-2">John Doe</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex pt-16">
+      <!-- Sidebar -->
+      <div
+        id="sidebar"
+        class="w-64 bg-white dark:bg-dark-bg-secondary h-screen shadow-lg fixed left-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-30"
+      >
+        <div class="p-4">
+          <nav class="space-y-2">
+            <a
+              href="/dashboard.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-chart-line w-6"></i>
+              <span>Dashboard</span>
+            </a>
+            <a
+              href="/deposits.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-wallet w-6"></i>
+              <span>Deposits</span>
+            </a>
+            <a
+              href="/withdraw.html"
+              class="flex items-center p-3 text-blue-600 bg-blue-50 dark:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-money-bill-wave w-6"></i>
+              <span>Withdraw</span>
+            </a>
+            <a
+              href="/investments.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-coins w-6"></i>
+              <span>Investments</span>
+            </a>
+            <a
+              href="/history.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-history w-6"></i>
+              <span>History</span>
+            </a>
+            <a
+              href="/settings.html"
+              class="flex items-center p-3 text-gray-600 dark:text-dark-text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
+            >
+              <i class="fas fa-cog w-6"></i>
+              <span>Settings</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Overlay -->
+      <div
+        id="overlay"
+        class="fixed inset-0 bg-black opacity-50 z-20 hidden lg:hidden"
+      ></div>
+
+      <!-- Main Content -->
+      <div class="w-full lg:ml-64 p-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+          <h1
+            class="text-2xl font-bold text-gray-800 dark:text-dark-text-primary"
+          >
+            Withdraw Funds
+          </h1>
+          <p class="text-gray-600 dark:text-dark-text-secondary mt-1">
+            Withdraw your funds to your cryptocurrency wallet
+          </p>
+        </div>
+
+        <!-- Balance and Withdrawal Form -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <!-- Available Balance Card -->
+          <div class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold mb-4 dark:text-dark-text-primary">
+              Available Balance
+            </h2>
+            <div class="space-y-4">
+              <div
+                class="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg"
+              >
+                <div class="flex items-center">
+                  <i class="fas fa-wallet text-blue-600 text-xl mr-3"></i>
+                  <div>
+                    <p
+                      class="text-sm text-gray-600 dark:text-dark-text-secondary"
+                    >
+                      Total Balance
+                    </p>
+                    <p
+                      class="text-xl font-bold text-gray-900 dark:text-dark-text-primary"
+                    >
+                      $24,500.00
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-sm font-semibold rounded-full"
+                >
+                  Available
+                </span>
+              </div>
+              <div class="text-sm text-gray-500 dark:text-dark-text-secondary">
+                <p>• Minimum withdrawal: $100</p>
+                <p>• Maximum withdrawal: $10,000 per transaction</p>
+                <p>• Processing time: 24-48 hours</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Withdrawal Form -->
+          <div class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold mb-4 dark:text-dark-text-primary">
+              Request Withdrawal
+            </h2>
+            <form id="withdrawalForm" class="space-y-4">
+              <div>
+                <label
+                  class="block text-sm font-medium text-gray-700 dark:text-dark-text-primary mb-2"
+                  >Select Cryptocurrency</label
+                >
+                <select
+                  id="cryptoSelect"
+                  class="w-full border border-gray-300 dark:border-gray-600 dark:bg-dark-bg-primary dark:text-dark-text-primary rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="btc">Bitcoin (BTC)</option>
+                  <option value="eth">Ethereum (ETH)</option>
+                  <option value="usdt">Tether (USDT)</option>
+                  <option value="bnb">Binance Coin (BNB)</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  class="block text-sm font-medium text-gray-700 dark:text-dark-text-primary mb-2"
+                  >Amount (USD)</label
+                >
+                <input
+                  type="number"
+                  id="usdAmount"
+                  min="100"
+                  max="10000"
+                  step="100"
+                  placeholder="Enter amount"
+                  class="w-full border border-gray-300 dark:border-gray-600 dark:bg-dark-bg-primary dark:text-dark-text-primary rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <p
+                  class="text-sm text-gray-500 dark:text-dark-text-secondary mt-1"
+                >
+                  Available balance: $24,500.00
+                </p>
+              </div>
+              <div>
+                <label
+                  class="block text-sm font-medium text-gray-700 dark:text-dark-text-primary mb-2"
+                  >Equivalent Amount in Crypto</label
+                >
+                <div class="relative">
+                  <input
+                    type="text"
+                    id="cryptoAmount"
+                    readonly
+                    class="w-full border border-gray-300 dark:border-gray-600 dark:bg-dark-bg-primary dark:text-dark-text-primary rounded-lg px-3 py-2 focus:outline-none"
+                  />
+                  <div
+                    class="absolute inset-y-0 right-0 flex items-center pr-3"
+                  >
+                    <span
+                      id="cryptoSymbol"
+                      class="text-gray-500 dark:text-dark-text-secondary"
+                    ></span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label
+                  class="block text-sm font-medium text-gray-700 dark:text-dark-text-primary mb-2"
+                  >Wallet Address</label
+                >
+                <input
+                  type="text"
+                  id="walletAddress"
+                  placeholder="Enter your wallet address"
+                  class="w-full border border-gray-300 dark:border-gray-600 dark:bg-dark-bg-primary dark:text-dark-text-primary rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <button
+                type="submit"
+                class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Request Withdrawal
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Recent Withdrawals -->
+        <div class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow">
+          <div class="p-6">
+            <h2 class="text-lg font-semibold mb-4 dark:text-dark-text-primary">
+              Recent Withdrawals
+            </h2>
+            <div class="overflow-hidden">
+              <table
+                class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+              >
+                <thead class="hidden lg:table-header-group">
+                  <tr>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Date
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Currency
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Amount
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Status
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-dark-text-secondary uppercase tracking-wider"
+                    >
+                      Transaction ID
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="bg-white dark:bg-dark-bg-secondary divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  <tr
+                    class="withdrawal-row cursor-pointer lg:cursor-default"
+                    onclick="toggleWithdrawalDetails(this)"
+                  >
+                    <td class="px-6 py-4 whitespace-nowrap lg:table-cell">
+                      <div class="flex items-center">
+                        <button
+                          type="button"
+                          class="mr-3 text-gray-500 lg:hidden"
+                        >
+                          <i class="fas fa-plus expand-icon"></i>
+                        </button>
+                        <div>
+                          <div class="text-sm font-medium text-gray-900">
+                            2024-02-20
+                          </div>
+                          <!-- Mobile Only Details -->
+                          <div class="mobile-details hidden lg:hidden mt-4">
+                            <div
+                              class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4"
+                            >
+                              <div>
+                                <div class="text-xs text-gray-500">
+                                  Currency
+                                </div>
+                                <div class="text-sm text-gray-900">
+                                  Bitcoin (BTC)
+                                </div>
+                              </div>
+                              <div>
+                                <div class="text-xs text-gray-500">Amount</div>
+                                <div class="text-sm text-gray-900">
+                                  $5,000.00
+                                </div>
+                              </div>
+                              <div>
+                                <div class="text-xs text-gray-500">Status</div>
+                                <span
+                                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                                >
+                                  Pending
+                                </span>
+                              </div>
+                              <div class="col-span-full">
+                                <div class="text-xs text-gray-500">
+                                  Transaction ID
+                                </div>
+                                <div class="text-sm text-gray-900 truncate">
+                                  0x1234...5678
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">Bitcoin (BTC)</div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">$5,000.00</div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                      >
+                        Pending
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">0x1234...5678</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div
+              class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+            >
+              <div
+                class="text-sm text-gray-500 dark:text-dark-text-secondary w-full sm:w-auto text-center sm:text-left"
+              >
+                Showing 1 to 10 of 50 results
+              </div>
+              <div class="flex flex-wrap justify-center sm:justify-end gap-2">
+                <button
+                  class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-dark-text-primary hover:bg-gray-50 dark:hover:bg-dark-bg-primary text-sm"
+                >
+                  Previous
+                </button>
+                <div class="flex gap-2">
+                  <button
+                    class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm min-w-[32px]"
+                  >
+                    1
+                  </button>
+                  <button
+                    class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-dark-text-primary hover:bg-gray-50 dark:hover:bg-dark-bg-primary text-sm min-w-[32px]"
+                  >
+                    2
+                  </button>
+                  <button
+                    class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-dark-text-primary hover:bg-gray-50 dark:hover:bg-dark-bg-primary text-sm min-w-[32px]"
+                  >
+                    3
+                  </button>
+                </div>
+                <button
+                  class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-dark-text-primary hover:bg-gray-50 dark:hover:bg-dark-bg-primary text-sm"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdrawal Confirmation Modal -->
+    <div
+      id="withdrawalModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden z-50"
+    >
+      <div class="min-h-screen px-4 text-center">
+        <div
+          class="sm:inline-block align-bottom bg-white dark:bg-dark-bg-secondary rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
+          <div
+            class="bg-white dark:bg-dark-bg-secondary px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
+          >
+            <div class="sm:flex sm:items-start">
+              <div class="w-full">
+                <h3
+                  class="text-lg leading-6 font-medium text-gray-900 dark:text-dark-text-primary mb-4"
+                >
+                  Confirm Withdrawal
+                </h3>
+
+                <!-- Amount Display -->
+                <div
+                  class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 rounded-lg p-4 mb-4"
+                >
+                  <div class="flex flex-col space-y-2">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center">
+                        <i class="fas fa-dollar-sign text-blue-600 mr-2"></i>
+                        <span class="text-blue-700 text-sm sm:text-base"
+                          >USD Amount:</span
+                        >
+                      </div>
+                      <span
+                        id="usdAmountDisplay"
+                        class="text-blue-700 font-bold text-sm sm:text-base"
+                      ></span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center">
+                        <i class="fas fa-coins text-blue-600 mr-2"></i>
+                        <span class="text-blue-700 text-sm sm:text-base"
+                          >Crypto Amount:</span
+                        >
+                      </div>
+                      <span
+                        id="cryptoAmountDisplay"
+                        class="text-blue-700 font-bold text-sm sm:text-base break-all"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Wallet Address -->
+                <div class="mb-4">
+                  <label
+                    class="block text-sm font-medium text-gray-700 dark:text-dark-text-primary mb-2"
+                    >Withdrawal Address</label
+                  >
+                  <div class="flex">
+                    <input
+                      type="text"
+                      id="confirmWalletAddress"
+                      readonly
+                      class="flex-1 block w-full px-3 py-2 sm:text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-dark-bg-primary"
+                      value=""
+                    />
+                  </div>
+                </div>
+
+                <!-- Warning -->
+                <div
+                  class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-4"
+                >
+                  <div class="flex items-start">
+                    <i
+                      class="fas fa-exclamation-triangle text-yellow-600 mt-0.5 mr-2"
+                    ></i>
+                    <div class="text-yellow-700 dark:text-yellow-300 text-sm">
+                      <p class="font-medium mb-1">
+                        Please verify all details carefully:
+                      </p>
+                      <ul class="list-disc list-inside space-y-1">
+                        <li>Withdrawal amount is correct</li>
+                        <li>Wallet address is correct</li>
+                        <li>Selected cryptocurrency is correct</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex flex-col space-y-3">
+                  <button
+                    onclick="confirmWithdrawal()"
+                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:text-sm"
+                  >
+                    Confirm Withdrawal
+                  </button>
+                  <button
+                    onclick="cancelWithdrawal()"
+                    class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:text-sm"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Mobile menu functionality
+      const menuBtn = document.getElementById("menuBtn");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      function toggleSidebar() {
+        sidebar.classList.toggle("-translate-x-full");
+        overlay.classList.toggle("hidden");
+        document.body.classList.toggle("overflow-hidden");
+      }
+
+      menuBtn.addEventListener("click", toggleSidebar);
+      overlay.addEventListener("click", toggleSidebar);
+
+      // Mobile table functionality
+      function toggleWithdrawalDetails(row) {
+        if (window.innerWidth >= 1024) return;
+
+        const mobileDetails = row.querySelector(".mobile-details");
+        const expandIcon = row.querySelector(".expand-icon");
+
+        mobileDetails.classList.toggle("hidden");
+        expandIcon.classList.toggle("fa-plus");
+        expandIcon.classList.toggle("fa-minus");
+      }
+
+      // Crypto conversion functionality
+      let cryptoRates = {};
+      const cryptoSymbols = {
+        btc: "BTC",
+        eth: "ETH",
+        usdt: "USDT",
+        bnb: "BNB",
+      };
+
+      // Function to fetch current crypto rates
+      async function fetchCryptoRates() {
+        try {
+          const response = await fetch(
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binance-coin&vs_currencies=usd"
+          );
+          const data = await response.json();
+
+          cryptoRates = {
+            btc: 1 / data.bitcoin.usd,
+            eth: 1 / data.ethereum.usd,
+            usdt: 1 / data.tether.usd,
+            bnb: 1 / data["binance-coin"].usd,
+          };
+        } catch (error) {
+          console.error("Error fetching crypto rates:", error);
+          cryptoRates = {
+            btc: 1 / 65000,
+            eth: 1 / 3500,
+            usdt: 1,
+            bnb: 1 / 450,
+          };
+        }
+        updateCryptoAmount();
+      }
+
+      // Function to update crypto amount
+      function updateCryptoAmount() {
+        const usdAmount = document.getElementById("usdAmount").value;
+        const cryptoSelect = document.getElementById("cryptoSelect");
+        const selectedCrypto = cryptoSelect.value;
+        const cryptoAmount = document.getElementById("cryptoAmount");
+        const cryptoSymbolElement = document.getElementById("cryptoSymbol");
+
+        if (usdAmount && usdAmount >= 100 && cryptoRates[selectedCrypto]) {
+          const convertedAmount = usdAmount * cryptoRates[selectedCrypto];
+          cryptoAmount.value = convertedAmount.toFixed(8);
+          cryptoSymbolElement.textContent = cryptoSymbols[selectedCrypto];
+        } else {
+          cryptoAmount.value = "";
+          cryptoSymbolElement.textContent = "";
+        }
+      }
+
+      // Withdrawal form functionality
+      document
+        .getElementById("withdrawalForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const usdAmount = document.getElementById("usdAmount").value;
+          const walletAddress = document.getElementById("walletAddress").value;
+
+          // Basic validation
+          if (!usdAmount || usdAmount < 100 || usdAmount > 10000) {
+            alert("Please enter a valid amount between $100 and $10,000");
+            return;
+          }
+
+          if (!walletAddress) {
+            alert("Please enter a wallet address");
+            return;
+          }
+
+          showWithdrawalModal();
+        });
+
+      function showWithdrawalModal() {
+        const usdAmount = parseFloat(
+          document.getElementById("usdAmount").value
+        ).toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+        });
+        const cryptoAmount = document.getElementById("cryptoAmount").value;
+        const cryptoSymbol =
+          document.getElementById("cryptoSymbol").textContent;
+        const walletAddress = document.getElementById("walletAddress").value;
+
+        document.getElementById("usdAmountDisplay").textContent = usdAmount;
+        document.getElementById(
+          "cryptoAmountDisplay"
+        ).textContent = `${cryptoAmount} ${cryptoSymbol}`;
+        document.getElementById("confirmWalletAddress").value = walletAddress;
+        document.getElementById("withdrawalModal").classList.remove("hidden");
+      }
+
+      function cancelWithdrawal() {
+        document.getElementById("withdrawalModal").classList.add("hidden");
+      }
+
+      function confirmWithdrawal() {
+        // Here you would typically send the withdrawal request to your server
+        alert("Withdrawal request submitted successfully!");
+        cancelWithdrawal();
+        document.getElementById("withdrawalForm").reset();
+        updateCryptoAmount();
+      }
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", async function () {
+        await fetchCryptoRates();
+        setInterval(fetchCryptoRates, 60000);
+
+        document
+          .getElementById("usdAmount")
+          .addEventListener("input", updateCryptoAmount);
+        document
+          .getElementById("cryptoSelect")
+          .addEventListener("change", updateCryptoAmount);
+      });
+
+      // Update dark mode toggle to work with both buttons
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      const darkModeToggleMobile = document.getElementById(
+        "darkModeToggleMobile"
+      );
+      const html = document.documentElement;
+
+      // Check for saved dark mode preference
+      if (
+        localStorage.getItem("darkMode") === "enabled" ||
+        (!localStorage.getItem("darkMode") &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        html.classList.add("dark");
+      }
+
+      // Toggle dark mode function
+      function toggleDarkMode() {
+        html.classList.toggle("dark");
+        localStorage.setItem(
+          "darkMode",
+          html.classList.contains("dark") ? "enabled" : "disabled"
+        );
+      }
+
+      // Add click handlers to both toggle buttons
+      darkModeToggle.addEventListener("click", toggleDarkMode);
+      darkModeToggleMobile.addEventListener("click", toggleDarkMode);
+
+      // Watch for system theme changes
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem("darkMode")) {
+            html.classList.toggle("dark", e.matches);
+          }
+        });
+    </script>
+  </body>
+</html>

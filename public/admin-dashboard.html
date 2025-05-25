@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - CryptoBroker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../src/styles/main.css" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed top-0 left-0 right-0 z-40">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <!-- Hamburger Menu Button -->
+            <button
+              id="menuBtn"
+              class="text-gray-600 hover:text-blue-600 inline-flex items-center justify-center p-2 rounded-md lg:hidden"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+            <a href="/admin" class="flex items-center ml-2 lg:ml-0">
+              <span class="text-2xl font-bold text-blue-600"
+                >CryptoBroker Admin</span
+              >
+            </a>
+          </div>
+          <div class="hidden lg:flex items-center space-x-8">
+            <a href="#" class="text-gray-600 hover:text-blue-600">
+              <i class="fas fa-bell"></i>
+              <span class="ml-1">Alerts</span>
+            </a>
+            <div class="relative">
+              <button
+                class="flex items-center text-gray-600 hover:text-blue-600"
+              >
+                <img
+                  src="https://ui-avatars.com/api/?name=Admin+User"
+                  alt="Profile"
+                  class="h-8 w-8 rounded-full"
+                />
+                <span class="ml-2">Admin</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex pt-16">
+      <!-- Sidebar -->
+      <div
+        id="sidebar"
+        class="w-64 bg-white h-screen shadow-lg fixed left-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-30"
+      >
+        <div class="p-4">
+          <nav class="space-y-2">
+            <a
+              href="#"
+              class="flex items-center p-3 text-blue-600 bg-blue-50 rounded-lg"
+            >
+              <i class="fas fa-chart-line w-6"></i>
+              <span>Dashboard</span>
+            </a>
+            <a
+              href="#"
+              class="flex items-center p-3 text-gray-600 hover:bg-blue-50 rounded-lg"
+            >
+              <i class="fas fa-users w-6"></i>
+              <span>Users</span>
+            </a>
+            <a
+              href="#"
+              class="flex items-center p-3 text-gray-600 hover:bg-blue-50 rounded-lg"
+            >
+              <i class="fas fa-coins w-6"></i>
+              <span>Investments</span>
+            </a>
+            <a
+              href="#"
+              class="flex items-center p-3 text-gray-600 hover:bg-blue-50 rounded-lg"
+            >
+              <i class="fas fa-money-bill-transfer w-6"></i>
+              <span>Transactions</span>
+            </a>
+            <a
+              href="#"
+              class="flex items-center p-3 text-gray-600 hover:bg-blue-50 rounded-lg"
+            >
+              <i class="fas fa-gear w-6"></i>
+              <span>Settings</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Overlay -->
+      <div
+        id="overlay"
+        class="fixed inset-0 bg-black opacity-50 z-20 hidden lg:hidden"
+      ></div>
+
+      <!-- Main Content -->
+      <div class="w-full lg:ml-64 p-8">
+        <!-- Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-gray-500 text-sm">Total Users</h3>
+              <i class="fas fa-users text-blue-500"></i>
+            </div>
+            <div class="text-2xl font-bold">1,234</div>
+            <div class="text-green-500 text-sm">+12 new today</div>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-gray-500 text-sm">Total Investments</h3>
+              <i class="fas fa-chart-pie text-purple-500"></i>
+            </div>
+            <div class="text-2xl font-bold">$2.5M</div>
+            <div class="text-green-500 text-sm">+5.3% this week</div>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-gray-500 text-sm">Platform Revenue</h3>
+              <i class="fas fa-dollar-sign text-green-500"></i>
+            </div>
+            <div class="text-2xl font-bold">$125,000</div>
+            <div class="text-green-500 text-sm">+2.1% this month</div>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-gray-500 text-sm">Active Plans</h3>
+              <i class="fas fa-briefcase text-orange-500"></i>
+            </div>
+            <div class="text-2xl font-bold">843</div>
+            <div class="text-blue-500 text-sm">Across all users</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">User Growth</h3>
+            <canvas id="userGrowthChart" height="150"></canvas>
+          </div>
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">Revenue Distribution</h3>
+            <canvas id="revenueChart" height="150"></canvas>
+          </div>
+        </div>
+
+        <!-- Recent Users Table -->
+        <div class="bg-white rounded-lg shadow mb-8">
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold">Recent Users</h3>
+              <button
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              >
+                View All Users
+              </button>
+            </div>
+            <div class="overflow-hidden">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="hidden lg:table-header-group">
+                  <tr>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      User
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Email
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Investments
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Status
+                    </th>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr
+                    class="user-row cursor-pointer lg:cursor-default"
+                    onclick="toggleUserDetails(this)"
+                  >
+                    <td class="px-6 py-4 whitespace-nowrap lg:table-cell">
+                      <div class="flex items-center">
+                        <button class="mr-3 text-gray-500 lg:hidden">
+                          <i class="fas fa-plus expand-icon"></i>
+                        </button>
+                        <div class="flex items-center">
+                          <img
+                            class="h-8 w-8 rounded-full"
+                            src="https://ui-avatars.com/api/?name=John+Doe"
+                            alt=""
+                          />
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              John Doe
+                            </div>
+                            <!-- Mobile Only Details -->
+                            <div class="mobile-details hidden lg:hidden mt-4">
+                              <div
+                                class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4"
+                              >
+                                <div>
+                                  <div class="text-xs text-gray-500">Email</div>
+                                  <div class="text-sm text-gray-900 truncate">
+                                    john.doe@example.com
+                                  </div>
+                                </div>
+                                <div>
+                                  <div class="text-xs text-gray-500">
+                                    Investments
+                                  </div>
+                                  <div class="text-sm text-gray-900">
+                                    $10,000.00
+                                  </div>
+                                </div>
+                                <div>
+                                  <div class="text-xs text-gray-500">
+                                    Status
+                                  </div>
+                                  <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                  >
+                                    Active
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="mt-3 flex justify-start space-x-3">
+                                <button
+                                  class="text-blue-600 hover:text-blue-900"
+                                >
+                                  Edit
+                                </button>
+                                <button class="text-red-600 hover:text-red-900">
+                                  Suspend
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">
+                        john.doe@example.com
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">$10,000.00</div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      >
+                        Active
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden lg:table-cell"
+                    >
+                      <button class="text-blue-600 hover:text-blue-900 mr-3">
+                        Edit
+                      </button>
+                      <button class="text-red-600 hover:text-red-900">
+                        Suspend
+                      </button>
+                    </td>
+                  </tr>
+                  <tr
+                    class="user-row cursor-pointer lg:cursor-default"
+                    onclick="toggleUserDetails(this)"
+                  >
+                    <td class="px-6 py-4 whitespace-nowrap lg:table-cell">
+                      <div class="flex items-center">
+                        <button class="mr-3 text-gray-500 lg:hidden">
+                          <i class="fas fa-plus expand-icon"></i>
+                        </button>
+                        <div class="flex items-center">
+                          <img
+                            class="h-8 w-8 rounded-full"
+                            src="https://ui-avatars.com/api/?name=Jane+Smith"
+                            alt=""
+                          />
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              Jane Smith
+                            </div>
+                            <!-- Mobile Only Details -->
+                            <div class="mobile-details hidden lg:hidden mt-4">
+                              <div
+                                class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4"
+                              >
+                                <div>
+                                  <div class="text-xs text-gray-500">Email</div>
+                                  <div class="text-sm text-gray-900 truncate">
+                                    jane.smith@example.com
+                                  </div>
+                                </div>
+                                <div>
+                                  <div class="text-xs text-gray-500">
+                                    Investments
+                                  </div>
+                                  <div class="text-sm text-gray-900">
+                                    $25,000.00
+                                  </div>
+                                </div>
+                                <div>
+                                  <div class="text-xs text-gray-500">
+                                    Status
+                                  </div>
+                                  <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                  >
+                                    Active
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="mt-3 flex justify-start space-x-3">
+                                <button
+                                  class="text-blue-600 hover:text-blue-900"
+                                >
+                                  Edit
+                                </button>
+                                <button class="text-red-600 hover:text-red-900">
+                                  Suspend
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">
+                        jane.smith@example.com
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">$25,000.00</div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      >
+                        Active
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden lg:table-cell"
+                    >
+                      <button class="text-blue-600 hover:text-blue-900 mr-3">
+                        Edit
+                      </button>
+                      <button class="text-red-600 hover:text-red-900">
+                        Suspend
+                      </button>
+                    </td>
+                  </tr>
+                  <tr
+                    class="user-row cursor-pointer lg:cursor-default"
+                    onclick="toggleUserDetails(this)"
+                  >
+                    <td class="px-6 py-4 whitespace-nowrap lg:table-cell">
+                      <div class="flex items-center">
+                        <button class="mr-3 text-gray-500 lg:hidden">
+                          <i class="fas fa-plus expand-icon"></i>
+                        </button>
+                        <div class="flex items-center">
+                          <img
+                            class="h-8 w-8 rounded-full"
+                            src="https://ui-avatars.com/api/?name=Mike+Johnson"
+                            alt=""
+                          />
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              Mike Johnson
+                            </div>
+                            <!-- Mobile Only Details -->
+                            <div class="mobile-details hidden lg:hidden mt-4">
+                              <div
+                                class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4"
+                              >
+                                <div>
+                                  <div class="text-xs text-gray-500">Email</div>
+                                  <div class="text-sm text-gray-900 truncate">
+                                    mike.johnson@example.com
+                                  </div>
+                                </div>
+                                <div>
+                                  <div class="text-xs text-gray-500">
+                                    Investments
+                                  </div>
+                                  <div class="text-sm text-gray-900">
+                                    $50,000.00
+                                  </div>
+                                </div>
+                                <div>
+                                  <div class="text-xs text-gray-500">
+                                    Status
+                                  </div>
+                                  <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                  >
+                                    Active
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="mt-3 flex justify-start space-x-3">
+                                <button
+                                  class="text-blue-600 hover:text-blue-900"
+                                >
+                                  Edit
+                                </button>
+                                <button class="text-red-600 hover:text-red-900">
+                                  Suspend
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">
+                        mike.johnson@example.com
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <div class="text-sm text-gray-900">$50,000.00</div>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap hidden lg:table-cell"
+                    >
+                      <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                      >
+                        Active
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden lg:table-cell"
+                    >
+                      <button class="text-blue-600 hover:text-blue-900 mr-3">
+                        Edit
+                      </button>
+                      <button class="text-red-600 hover:text-red-900">
+                        Suspend
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add this at the beginning of your script section
+      tailwind.config = {
+        theme: {
+          extend: {
+            screens: {
+              xs: "475px",
+            },
+          },
+        },
+      };
+
+      // Mobile menu functionality
+      const menuBtn = document.getElementById("menuBtn");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      function toggleSidebar() {
+        sidebar.classList.toggle("-translate-x-full");
+        overlay.classList.toggle("hidden");
+        document.body.classList.toggle("overflow-hidden");
+      }
+
+      menuBtn.addEventListener("click", toggleSidebar);
+      overlay.addEventListener("click", toggleSidebar);
+
+      // Mobile table functionality
+      function toggleUserDetails(row) {
+        if (window.innerWidth >= 1024) return; // Don't run on desktop
+
+        const mobileDetails = row.querySelector(".mobile-details");
+        const expandIcon = row.querySelector(".expand-icon");
+
+        mobileDetails.classList.toggle("hidden");
+        expandIcon.classList.toggle("fa-plus");
+        expandIcon.classList.toggle("fa-minus");
+      }
+
+      // User Growth Chart
+      const userGrowthCtx = document
+        .getElementById("userGrowthChart")
+        .getContext("2d");
+      new Chart(userGrowthCtx, {
+        type: "line",
+        data: {
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+          datasets: [
+            {
+              label: "New Users",
+              data: [150, 280, 450, 620, 800, 1234],
+              borderColor: "rgb(59, 130, 246)",
+              tension: 0.1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 2.5,
+          plugins: {
+            legend: {
+              position: "bottom",
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                drawBorder: false,
+              },
+              ticks: {
+                maxTicksLimit: 5,
+              },
+            },
+            x: {
+              grid: {
+                display: false,
+              },
+            },
+          },
+        },
+      });
+
+      // Revenue Distribution Chart
+      const revenueCtx = document
+        .getElementById("revenueChart")
+        .getContext("2d");
+      new Chart(revenueCtx, {
+        type: "doughnut",
+        data: {
+          labels: ["Premium Plan", "Gold Plan", "Platinum Plan"],
+          datasets: [
+            {
+              data: [45, 30, 25],
+              backgroundColor: [
+                "rgb(59, 130, 246)",
+                "rgb(251, 191, 36)",
+                "rgb(167, 139, 250)",
+              ],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 2,
+          plugins: {
+            legend: {
+              position: "right",
+              align: "center",
+            },
+          },
+          layout: {
+            padding: {
+              right: 50,
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
