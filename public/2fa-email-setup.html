@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Set Up Email Authentication - CryptoBroker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                "bg-primary": "#1a1b1e",
+                "bg-secondary": "#2c2e33",
+                "text-primary": "#e4e6ea",
+                "text-secondary": "#9ca3af",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../src/styles/main.css" />
+  </head>
+  <body
+    class="bg-gray-50 dark:bg-dark-bg-primary dark:text-dark-text-primary transition-colors duration-200"
+  >
+    <div class="min-h-screen flex items-center justify-center p-4">
+      <div class="max-w-xl w-full">
+        <div
+          class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow-lg p-8"
+        >
+          <!-- Progress Steps -->
+          <div class="flex items-center justify-center mb-8">
+            <div class="flex items-center">
+              <div
+                class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center"
+              >
+                1
+              </div>
+              <div class="h-1 w-12 bg-blue-600"></div>
+              <div
+                class="w-8 h-8 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full flex items-center justify-center"
+              >
+                2
+              </div>
+              <div class="h-1 w-12 bg-gray-200 dark:bg-gray-700"></div>
+              <div
+                class="w-8 h-8 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full flex items-center justify-center"
+              >
+                3
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 1: Confirm Email -->
+          <div id="step1" class="space-y-6">
+            <div class="text-center">
+              <h1
+                class="text-2xl font-bold text-gray-900 dark:text-dark-text-primary mb-2"
+              >
+                Set Up Email Authentication
+              </h1>
+              <p class="text-gray-600 dark:text-dark-text-secondary">
+                Confirm your email address to receive authentication codes
+              </p>
+            </div>
+
+            <div class="space-y-4">
+              <div>
+                <label
+                  class="block text-sm font-medium text-gray-700 dark:text-dark-text-secondary mb-2"
+                >
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value="john.doe@example.com"
+                  readonly
+                  class="w-full border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-dark-text-primary rounded-lg px-3 py-2"
+                />
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  This is your account's primary email address
+                </p>
+              </div>
+
+              <div class="flex justify-between">
+                <a
+                  href="/2fa-setup.html"
+                  class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                >
+                  <i class="fas fa-arrow-left mr-2"></i>Back
+                </a>
+                <button
+                  onclick="showStep(2)"
+                  class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Send Verification Code
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Enter Code -->
+          <div id="step2" class="space-y-6 hidden">
+            <div class="text-center">
+              <h1
+                class="text-2xl font-bold text-gray-900 dark:text-dark-text-primary mb-2"
+              >
+                Check Your Email
+              </h1>
+              <p class="text-gray-600 dark:text-dark-text-secondary">
+                We've sent a verification code to john.doe@example.com
+              </p>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex justify-center space-x-2">
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+                />
+              </div>
+
+              <div class="text-center">
+                <button
+                  onclick="resendCode()"
+                  class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm"
+                >
+                  Didn't receive the code? Send again
+                </button>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                  Code will expire in <span id="timer">5:00</span>
+                </p>
+              </div>
+
+              <div class="flex justify-between">
+                <button
+                  onclick="showStep(1)"
+                  class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                >
+                  <i class="fas fa-arrow-left mr-2"></i>Back
+                </button>
+                <button
+                  onclick="showStep(3)"
+                  class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Verify Code
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Success -->
+          <div id="step3" class="space-y-6 hidden">
+            <div class="text-center">
+              <div class="flex justify-center mb-6">
+                <div
+                  class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center"
+                >
+                  <i
+                    class="fas fa-check text-3xl text-green-600 dark:text-green-400"
+                  ></i>
+                </div>
+              </div>
+              <h1
+                class="text-2xl font-bold text-gray-900 dark:text-dark-text-primary mb-2"
+              >
+                Setup Complete!
+              </h1>
+              <p class="text-gray-600 dark:text-dark-text-secondary">
+                Email authentication has been successfully set up for your
+                account
+              </p>
+            </div>
+
+            <div class="bg-gray-50 dark:bg-dark-bg-primary p-4 rounded-lg">
+              <h3
+                class="font-medium text-gray-900 dark:text-dark-text-primary mb-2"
+              >
+                What happens next?
+              </h3>
+              <ul
+                class="text-sm text-gray-600 dark:text-dark-text-secondary space-y-2"
+              >
+                <li class="flex items-start">
+                  <i
+                    class="fas fa-envelope-open mt-1 mr-2 text-blue-600 dark:text-blue-400"
+                  ></i>
+                  <span
+                    >You'll receive a verification code via email when signing
+                    in</span
+                  >
+                </li>
+                <li class="flex items-start">
+                  <i
+                    class="fas fa-clock mt-1 mr-2 text-blue-600 dark:text-blue-400"
+                  ></i>
+                  <span>Each code is valid for 5 minutes</span>
+                </li>
+                <li class="flex items-start">
+                  <i
+                    class="fas fa-shield-alt mt-1 mr-2 text-blue-600 dark:text-blue-400"
+                  ></i>
+                  <span
+                    >This adds an extra layer of security to your account</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="flex justify-center">
+              <button
+                onclick="window.location.href='/settings.html'"
+                class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Return to Settings
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Dark mode functionality
+      const html = document.documentElement;
+      if (
+        localStorage.getItem("darkMode") === "enabled" ||
+        (!localStorage.getItem("darkMode") &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        html.classList.add("dark");
+      }
+
+      // Step navigation
+      function showStep(stepNumber) {
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step3").classList.add("hidden");
+        document.getElementById("step" + stepNumber).classList.remove("hidden");
+
+        // Update progress indicators
+        const steps = document.querySelectorAll(".flex.items-center > div");
+        steps.forEach((step, index) => {
+          if (index % 2 === 0) {
+            // Only process the circles, not the lines
+            if (index / 2 < stepNumber) {
+              step.classList.remove(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-600",
+                "dark:text-gray-400"
+              );
+              step.classList.add("bg-blue-600", "text-white");
+            } else if (index / 2 === stepNumber - 1) {
+              step.classList.remove(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-600",
+                "dark:text-gray-400"
+              );
+              step.classList.add("bg-blue-600", "text-white");
+            } else {
+              step.classList.remove("bg-blue-600", "text-white");
+              step.classList.add(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-600",
+                "dark:text-gray-400"
+              );
+            }
+          }
+        });
+
+        // Start timer when showing step 2
+        if (stepNumber === 2) {
+          startTimer();
+        }
+      }
+
+      // Timer functionality
+      let timerInterval;
+      function startTimer() {
+        let timeLeft = 300; // 5 minutes in seconds
+        const timerDisplay = document.getElementById("timer");
+
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          const minutes = Math.floor(timeLeft / 60);
+          const seconds = timeLeft % 60;
+          timerDisplay.textContent = `${minutes}:${seconds
+            .toString()
+            .padStart(2, "0")}`;
+
+          if (timeLeft === 0) {
+            clearInterval(timerInterval);
+            // Handle expired code
+          } else {
+            timeLeft--;
+          }
+        }, 1000);
+      }
+
+      // Resend code functionality
+      function resendCode() {
+        startTimer();
+        // Add API call to resend code
+        alert("New verification code sent!");
+      }
+
+      // Auto-focus next input in verification code
+      const inputs = document.querySelectorAll('input[type="text"]');
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", function () {
+          if (this.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+        input.addEventListener("keydown", function (e) {
+          if (e.key === "Backspace" && !this.value && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Set Up Authenticator - CryptoBroker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                "bg-primary": "#1a1b1e",
+                "bg-secondary": "#2c2e33",
+                "text-primary": "#e4e6ea",
+                "text-secondary": "#9ca3af",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../src/styles/main.css" />
+  </head>
+  <body
+    class="bg-gray-50 dark:bg-dark-bg-primary dark:text-dark-text-primary transition-colors duration-200"
+  >
+    <div class="min-h-screen flex items-center justify-center p-4">
+      <div class="max-w-xl w-full">
+        <div
+          class="bg-white dark:bg-dark-bg-secondary rounded-lg shadow-lg p-8"
+        >
+          <!-- Progress Steps -->
+          <div class="flex items-center justify-center mb-8">
+            <div class="flex items-center">
+              <div
+                class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center"
+              >
+                1
+              </div>
+              <div class="h-1 w-12 bg-blue-600"></div>
+              <div
+                class="w-8 h-8 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full flex items-center justify-center"
+              >
+                2
+              </div>
+              <div class="h-1 w-12 bg-gray-200 dark:bg-gray-700"></div>
+              <div
+                class="w-8 h-8 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full flex items-center justify-center"
+              >
+                3
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 1: Scan QR Code -->
+          <div id="step1" class="space-y-6">
+            <div class="text-center">
+              <h1
+                class="text-2xl font-bold text-gray-900 dark:text-dark-text-primary mb-2"
+              >
+                Set Up Authenticator App
+              </h1>
+              <p class="text-gray-600 dark:text-dark-text-secondary">
+                Scan the QR code below with your authenticator app
+              </p>
+            </div>
+
+            <!-- QR Code -->
+            <div class="flex justify-center">
+              <div class="bg-white p-4 rounded-lg">
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=otpauth://totp/CryptoBroker:john.doe@example.com?secret=JBSWY3DPEHPK3PXP&issuer=CryptoBroker"
+                  alt="QR Code"
+                  class="w-48 h-48"
+                />
+              </div>
+            </div>
+
+            <!-- Manual Entry Key -->
+            <div class="text-center">
+              <p
+                class="text-sm text-gray-600 dark:text-dark-text-secondary mb-2"
+              >
+                Can't scan the QR code? Use this code instead:
+              </p>
+              <div class="flex items-center justify-center space-x-2">
+                <code
+                  class="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded text-sm font-mono"
+                >
+                  JBSWY3 DPEHPK 3PXP
+                </code>
+                <button
+                  onclick="copyToClipboard('JBSWY3DPEHPK3PXP')"
+                  class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                >
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <a
+                href="/2fa-setup.html"
+                class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+              >
+                <i class="fas fa-arrow-left mr-2"></i>Back
+              </a>
+              <button
+                onclick="showStep(2)"
+                class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Verify Code -->
+          <div id="step2" class="space-y-6 hidden">
+            <div class="text-center">
+              <h1
+                class="text-2xl font-bold text-gray-900 dark:text-dark-text-primary mb-2"
+              >
+                Verify Setup
+              </h1>
+              <p class="text-gray-600 dark:text-dark-text-secondary">
+                Enter the 6-digit code from your authenticator app
+              </p>
+            </div>
+
+            <div class="flex justify-center space-x-2">
+              <input
+                type="text"
+                maxlength="1"
+                class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                class="w-12 h-12 text-center text-2xl border border-gray-300 dark:border-gray-600 rounded-lg"
+              />
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button
+                onclick="showStep(1)"
+                class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+              >
+                <i class="fas fa-arrow-left mr-2"></i>Back
+              </button>
+              <button
+                onclick="showStep(3)"
+                class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Verify
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Backup Codes -->
+          <div id="step3" class="space-y-6 hidden">
+            <div class="text-center">
+              <h1
+                class="text-2xl font-bold text-gray-900 dark:text-dark-text-primary mb-2"
+              >
+                Save Backup Codes
+              </h1>
+              <p class="text-gray-600 dark:text-dark-text-secondary">
+                Keep these backup codes safe. You can use them to access your
+                account if you lose your authenticator device.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div
+                class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-center font-mono"
+              >
+                1234-5678
+              </div>
+              <div
+                class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-center font-mono"
+              >
+                2345-6789
+              </div>
+              <div
+                class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-center font-mono"
+              >
+                3456-7890
+              </div>
+              <div
+                class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-center font-mono"
+              >
+                4567-8901
+              </div>
+              <div
+                class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-center font-mono"
+              >
+                5678-9012
+              </div>
+              <div
+                class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-center font-mono"
+              >
+                6789-0123
+              </div>
+            </div>
+
+            <div class="flex justify-center mt-4">
+              <button
+                onclick="downloadBackupCodes()"
+                class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+              >
+                <i class="fas fa-download mr-2"></i>Download Codes
+              </button>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button
+                onclick="showStep(2)"
+                class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+              >
+                <i class="fas fa-arrow-left mr-2"></i>Back
+              </button>
+              <button
+                onclick="window.location.href='/settings.html'"
+                class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Finish Setup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Dark mode functionality
+      const html = document.documentElement;
+      if (
+        localStorage.getItem("darkMode") === "enabled" ||
+        (!localStorage.getItem("darkMode") &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        html.classList.add("dark");
+      }
+
+      // Step navigation
+      function showStep(stepNumber) {
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step3").classList.add("hidden");
+        document.getElementById("step" + stepNumber).classList.remove("hidden");
+
+        // Update progress indicators
+        const steps = document.querySelectorAll(".flex.items-center > div");
+        steps.forEach((step, index) => {
+          if (index % 2 === 0) {
+            // Only process the circles, not the lines
+            if (index / 2 < stepNumber) {
+              step.classList.remove(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-600",
+                "dark:text-gray-400"
+              );
+              step.classList.add("bg-blue-600", "text-white");
+            } else if (index / 2 === stepNumber - 1) {
+              step.classList.remove(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-600",
+                "dark:text-gray-400"
+              );
+              step.classList.add("bg-blue-600", "text-white");
+            } else {
+              step.classList.remove("bg-blue-600", "text-white");
+              step.classList.add(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-600",
+                "dark:text-gray-400"
+              );
+            }
+          }
+        });
+      }
+
+      // Copy to clipboard function
+      function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert("Copied to clipboard!");
+        });
+      }
+
+      // Download backup codes
+      function downloadBackupCodes() {
+        const codes = [
+          "1234-5678",
+          "2345-6789",
+          "3456-7890",
+          "4567-8901",
+          "5678-9012",
+          "6789-0123",
+        ];
+        const content = "CryptoBroker 2FA Backup Codes\n\n" + codes.join("\n");
+        const blob = new Blob([content], { type: "text/plain" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "cryptobroker-backup-codes.txt";
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+
+      // Auto-focus next input in verification code
+      const inputs = document.querySelectorAll('input[type="text"]');
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", function () {
+          if (this.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+        input.addEventListener("keydown", function (e) {
+          if (e.key === "Backspace" && !this.value && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
