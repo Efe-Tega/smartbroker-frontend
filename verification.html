@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Factor Verification</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="src/styles/main.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full mx-4">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Two-Factor Verification</h2>
+                <p class="text-gray-600 mt-2" id="verification-method-text">
+                    Please enter your verification code
+                </p>
+            </div>
+
+            <form id="verification-form" class="space-y-6">
+                <div>
+                    <label for="verification-code" class="block text-sm font-medium text-gray-700">
+                        Verification Code
+                    </label>
+                    <input
+                        type="text"
+                        id="verification-code"
+                        name="verification-code"
+                        required
+                        pattern="\d{6}"
+                        maxlength="6"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Enter 6-digit code"
+                    >
+                </div>
+
+                <div id="error-message" class="text-red-600 text-sm hidden"></div>
+
+                <button
+                    type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Verify
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Didn't receive the code? 
+                    <a href="#" class="text-indigo-600 hover:text-indigo-500" id="resend-code">
+                        Resend code
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/js/auth.js"></script>
+    <script>
+        // Update verification method text based on the method
+        document.addEventListener('DOMContentLoaded', () => {
+            const methodText = document.getElementById('verification-method-text');
+            if (window.verificationMethod === 'google-auth') {
+                methodText.textContent = 'Please enter the code from your Google Authenticator app';
+            } else {
+                methodText.textContent = 'Please enter the verification code sent to your email';
+            }
+
+            // Handle resend code click
+            document.getElementById('resend-code').addEventListener('click', (e) => {
+                e.preventDefault();
+                // Here you would implement the resend logic
+                alert('A new verification code has been sent.');
+            });
+        });
+    </script>
+</body>
+</html> 
